@@ -1,11 +1,12 @@
 package com.springcrud.model;
 
+import com.springcrud.utils.enums.ApiResponse;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BaseController {
-    public String responseCode;
-    public String responseDesc;
+    public ApiResponse apiResponse;
     public Object paylaod;
 
     private static final String RESPONSE_CODE_KEY = "responseCode";
@@ -17,16 +18,15 @@ public class BaseController {
     }
     public Map getResponse() {
         Map<String, Object> response = new LinkedHashMap<>();
-        response.put(RESPONSE_CODE_KEY, responseCode);
-        response.put(RESPONSE_DESC_KEY, responseDesc);
+        response.put(RESPONSE_CODE_KEY, apiResponse.getValue());
+        response.put(RESPONSE_DESC_KEY, apiResponse.getDesc());
         response.put(PAYLAOD_KEY, paylaod);
         reset();    //Reset after send
         return response;
     }
 
     private void reset() {
-        responseCode = null;
-        responseDesc = null;
+        apiResponse = ApiResponse.NONE;
         paylaod = null;
     }
 
