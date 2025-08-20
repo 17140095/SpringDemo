@@ -1,0 +1,31 @@
+pipeline {
+	agent any
+	stages {
+		stage("Clean Up") {
+			steps {
+				echo "Cleaning project directory"
+				deleteDir()
+			}
+		}
+		stage("Checkout") {
+			steps {
+				echo "Checkout git project"
+				sh "git clone https://github.com/17140095/SpringDemo.git"
+			}
+		}
+		stage("Build") {
+			steps {
+				dir("SpringDemo") {
+					sh "mvn clean install"
+				}
+			}
+		}
+		stage("Test") {
+			steps {
+				dir("SpringDemo") {
+					sh "mvn test"
+				}
+			}
+		}
+	}
+}
